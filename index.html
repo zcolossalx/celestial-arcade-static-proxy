@@ -6,8 +6,6 @@
 <title>Google Classroom</title>
 <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="/uv/uv.bundle.js"></script>
-<script src="/uv/uv.config.js"></script>
 <style>
   :root {
     --bg: #0a0a0f;
@@ -18,11 +16,8 @@
     --accent: #7c6fff;
     --accent2: #a78bfa;
     --accent3: #6ee7b7;
-    --glow: rgba(124,111,255,0.15);
   }
-
   * { margin:0; padding:0; box-sizing:border-box; }
-
   body {
     background: var(--bg);
     color: var(--text);
@@ -34,281 +29,46 @@
     justify-content: center;
     overflow: hidden;
   }
-
-  #bg-orbs {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.18;
-    animation: drift 18s ease-in-out infinite;
-  }
-
-  .orb1 { width:500px; height:500px; background:#7c6fff; top:-100px; left:-100px; animation-delay:0s; }
+  #bg-orbs { position:fixed; inset:0; pointer-events:none; z-index:0; }
+  .orb { position:absolute; border-radius:50%; filter:blur(80px); opacity:0.18; animation:drift 18s ease-in-out infinite; }
+  .orb1 { width:500px; height:500px; background:#7c6fff; top:-100px; left:-100px; }
   .orb2 { width:400px; height:400px; background:#a78bfa; bottom:-80px; right:-80px; animation-delay:-6s; }
   .orb3 { width:300px; height:300px; background:#6ee7b7; top:40%; left:60%; animation-delay:-12s; }
-
   @keyframes drift {
-    0%,100% { transform: translate(0,0) scale(1); }
-    33% { transform: translate(30px,-20px) scale(1.05); }
-    66% { transform: translate(-20px,30px) scale(0.97); }
+    0%,100% { transform:translate(0,0) scale(1); }
+    33% { transform:translate(30px,-20px) scale(1.05); }
+    66% { transform:translate(-20px,30px) scale(0.97); }
   }
-
-  #main {
-    position: relative;
-    z-index: 1;
-    width: min(520px, 92vw);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 28px;
-  }
-
-  #logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-
-  #logo-icon {
-    font-size: 3rem;
-    filter: drop-shadow(0 0 20px rgba(124,111,255,0.5));
-    animation: pulse 3s ease-in-out infinite;
-  }
-
+  #main { position:relative; z-index:1; width:min(520px,92vw); display:flex; flex-direction:column; align-items:center; gap:28px; }
+  #logo { display:flex; flex-direction:column; align-items:center; gap:10px; }
+  #logo-icon { font-size:3rem; filter:drop-shadow(0 0 20px rgba(124,111,255,0.5)); animation:pulse 3s ease-in-out infinite; }
   @keyframes pulse {
-    0%,100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(124,111,255,0.5)); }
-    50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(167,139,250,0.7)); }
+    0%,100% { transform:scale(1); }
+    50% { transform:scale(1.05); filter:drop-shadow(0 0 30px rgba(167,139,250,0.7)); }
   }
-
-  #logo h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: lowercase;
-    background: linear-gradient(135deg, var(--accent2), var(--accent), var(--accent3));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  #logo p {
-    color: var(--muted);
-    font-size: 0.78rem;
-    letter-spacing: 0.4px;
-    font-weight: 300;
-  }
-
-  #search-box {
-    width: 100%;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 6px 6px 6px 18px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-
-  #search-box:focus-within {
-    border-color: rgba(124,111,255,0.5);
-    box-shadow: 0 0 0 3px rgba(124,111,255,0.08), 0 8px 30px rgba(124,111,255,0.1);
-  }
-
-  #search-icon {
-    color: var(--muted);
-    font-size: 1rem;
-    flex-shrink: 0;
-  }
-
-  #url-input {
-    flex: 1;
-    background: none;
-    border: none;
-    outline: none;
-    color: var(--text);
-    font-size: 0.95rem;
-    font-family: inherit;
-    font-weight: 400;
-    caret-color: var(--accent);
-  }
-
-  #url-input::placeholder { color: var(--muted); }
-
-  #go-btn {
-    background: linear-gradient(135deg, var(--accent2), var(--accent));
-    border: none;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 11px;
-    cursor: pointer;
-    font-size: 0.88rem;
-    font-family: inherit;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    transition: opacity 0.15s, transform 0.1s;
-    flex-shrink: 0;
-  }
-
-  #go-btn:hover { opacity: 0.88; transform: scale(1.02); }
-  #go-btn:active { transform: scale(0.98); }
-
-  #tools {
-    width: 100%;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-  }
-
-  .tool-btn {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 8px 14px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 0.78rem;
-    font-family: inherit;
-    letter-spacing: 0.3px;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .tool-btn:hover {
-    background: rgba(124,111,255,0.1);
-    border-color: rgba(124,111,255,0.3);
-    color: var(--accent2);
-  }
-
-  .tool-btn.active {
-    background: rgba(124,111,255,0.15);
-    border-color: rgba(124,111,255,0.4);
-    color: var(--accent2);
-  }
-
-  #cloak-panel {
-    display: none;
-    width: 100%;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px;
-    gap: 10px;
-    flex-direction: column;
-  }
-
-  #cloak-panel.open { display: flex; }
-
-  #cloak-panel p {
-    color: var(--muted);
-    font-size: 0.78rem;
-    letter-spacing: 0.2px;
-  }
-
-  .cloak-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .cloak-opt {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 7px 12px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-family: inherit;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.15s;
-  }
-
-  .cloak-opt:hover {
-    border-color: rgba(124,111,255,0.4);
-    background: rgba(124,111,255,0.08);
-  }
-
-  .cloak-opt.selected {
-    border-color: var(--accent);
-    background: rgba(124,111,255,0.15);
-    color: var(--accent2);
-  }
-
-  #about-blank-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(110,231,183,0.08);
-    border: 1px solid rgba(110,231,183,0.2);
-    border-radius: 8px;
-    padding: 7px 12px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-family: inherit;
-    color: var(--accent3);
-    transition: all 0.15s;
-  }
-
-  #about-blank-btn:hover {
-    background: rgba(110,231,183,0.15);
-    border-color: rgba(110,231,183,0.4);
-  }
-
-  #footer {
-    position: fixed;
-    bottom: 20px;
-    left: 0; right: 0;
-    text-align: center;
-    color: var(--muted);
-    font-size: 0.7rem;
-    letter-spacing: 0.4px;
-    opacity: 0.5;
-    z-index: 1;
-  }
-
-  #loading-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: var(--bg);
-    z-index: 100;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-  }
-
-  #loading-overlay.active { display: flex; }
-
-  .spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid var(--border);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  #loading-overlay p {
-    color: var(--muted);
-    font-size: 0.85rem;
-    letter-spacing: 0.3px;
-  }
+  #logo h1 { font-size:1.6rem; font-weight:700; letter-spacing:3px; text-transform:lowercase; background:linear-gradient(135deg,var(--accent2),var(--accent),var(--accent3)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  #logo p { color:var(--muted); font-size:0.78rem; letter-spacing:0.4px; font-weight:300; }
+  #search-box { width:100%; background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:6px 6px 6px 18px; display:flex; align-items:center; gap:10px; transition:border-color .2s,box-shadow .2s; }
+  #search-box:focus-within { border-color:rgba(124,111,255,0.5); box-shadow:0 0 0 3px rgba(124,111,255,0.08),0 8px 30px rgba(124,111,255,0.1); }
+  #url-input { flex:1; background:none; border:none; outline:none; color:var(--text); font-size:0.95rem; font-family:inherit; caret-color:var(--accent); }
+  #url-input::placeholder { color:var(--muted); }
+  #go-btn { background:linear-gradient(135deg,var(--accent2),var(--accent)); border:none; color:#fff; padding:10px 20px; border-radius:11px; cursor:pointer; font-size:0.88rem; font-family:inherit; font-weight:600; transition:opacity .15s,transform .1s; }
+  #go-btn:hover { opacity:0.88; transform:scale(1.02); }
+  #tools { width:100%; display:flex; gap:10px; justify-content:center; }
+  .tool-btn { background:var(--panel); border:1px solid var(--border); color:var(--muted); padding:8px 14px; border-radius:10px; cursor:pointer; font-size:0.78rem; font-family:inherit; transition:background .15s,color .15s,border-color .15s; display:flex; align-items:center; gap:6px; }
+  .tool-btn:hover { background:rgba(124,111,255,0.1); border-color:rgba(124,111,255,0.3); color:var(--accent2); }
+  .tool-btn.active { background:rgba(124,111,255,0.15); border-color:rgba(124,111,255,0.4); color:var(--accent2); }
+  #cloak-panel { display:none; width:100%; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:16px; gap:10px; flex-direction:column; }
+  #cloak-panel.open { display:flex; }
+  #cloak-panel p { color:var(--muted); font-size:0.78rem; }
+  .cloak-options { display:flex; flex-wrap:wrap; gap:8px; }
+  .cloak-opt { background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:8px; padding:7px 12px; cursor:pointer; font-size:0.8rem; font-family:inherit; color:var(--text); display:flex; align-items:center; gap:6px; transition:all .15s; }
+  .cloak-opt:hover { border-color:rgba(124,111,255,0.4); background:rgba(124,111,255,0.08); }
+  .cloak-opt.selected { border-color:var(--accent); background:rgba(124,111,255,0.15); color:var(--accent2); }
+  #status-msg { color:var(--muted); font-size:0.75rem; letter-spacing:0.3px; min-height:16px; text-align:center; }
+  #status-msg.error { color:#ff6b6b; }
+  #status-msg.ok { color:var(--accent3); }
+  #footer { position:fixed; bottom:20px; left:0; right:0; text-align:center; color:var(--muted); font-size:0.7rem; opacity:0.4; z-index:1; }
 </style>
 </head>
 <body>
@@ -327,7 +87,7 @@
   </div>
 
   <div id="search-box">
-    <span id="search-icon">🔍</span>
+    <span style="color:var(--muted);font-size:1rem">🔍</span>
     <input id="url-input" type="text" placeholder="search or enter a url..." autocomplete="off" spellcheck="false" />
     <button id="go-btn">go</button>
   </div>
@@ -341,63 +101,109 @@
     <p>disguise this tab as something else</p>
     <div class="cloak-options" id="cloak-opts"></div>
   </div>
-</div>
 
-<div id="loading-overlay">
-  <div class="spinner"></div>
-  <p id="loading-text">connecting...</p>
+  <div id="status-msg"></div>
 </div>
 
 <div id="footer">void proxy — stay safe</div>
 
 <script>
-const cloakPresets = [
-  { label: '📄 google docs', title: 'Document - Google Docs', icon: 'https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico' },
-  { label: '📊 google sheets', title: 'Spreadsheet - Google Sheets', icon: 'https://ssl.gstatic.com/docs/spreadsheets/favicon3.ico' },
-  { label: '🏫 google classroom', title: 'Google Classroom', icon: 'https://ssl.gstatic.com/classroom/favicon.png' },
-  { label: '🔍 google', title: 'Google', icon: 'https://www.google.com/favicon.ico' },
-  { label: '📺 khan academy', title: 'Khan Academy', icon: 'https://www.khanacademy.org/favicon.ico' },
-  { label: '❌ clear cloak', title: null, icon: null },
-];
+const SW_PATHS = ['/uv/uv.sw.js', '/sw.js', '/uv.sw.js', '/static/uv/uv.sw.js'];
+const UV_BUNDLE_CDN = 'https://cdn.jsdelivr.net/npm/@titaniumnetwork/ultraviolet@3/dist/uv.bundle.js';
+const UV_HANDLER_CDN = 'https://cdn.jsdelivr.net/npm/@titaniumnetwork/ultraviolet@3/dist/uv.handler.js';
+const UV_BUNDLE_LOCAL = ['/uv/uv.bundle.js', '/static/uv/uv.bundle.js'];
+const WISP = 'wss://anura.pro/wisp';
 
-let currentCloak = null;
+const status = document.getElementById('status-msg');
 
-function applyCloak(preset){
-  document.title = preset.title || 'Google Classroom';
-  const link = document.querySelector("link[rel='icon']") || document.createElement('link');
-  link.rel = 'icon';
-  link.href = preset.icon || 'https://ssl.gstatic.com/classroom/favicon.png';
-  document.head.appendChild(link);
-  currentCloak = preset;
-  document.querySelectorAll('.cloak-opt').forEach((b,i)=>{
-    b.classList.toggle('selected', cloakPresets[i] === preset && preset.title);
+function setStatus(msg, type=''){
+  status.textContent = msg;
+  status.className = type;
+}
+
+function loadScript(src){
+  return new Promise((res,rej)=>{
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = res;
+    s.onerror = rej;
+    document.head.appendChild(s);
   });
 }
 
-const cloakOpts = document.getElementById('cloak-opts');
-cloakPresets.forEach(p=>{
-  const btn = document.createElement('button');
-  btn.className = 'cloak-opt';
-  btn.textContent = p.label;
-  btn.onclick = ()=>{ applyCloak(p); };
-  cloakOpts.appendChild(btn);
-});
+async function loadUVBundle(){
+  for(const path of UV_BUNDLE_LOCAL){
+    try{
+      await loadScript(path);
+      if(typeof Ultraviolet !== 'undefined') return true;
+    }catch(e){}
+  }
+  try{
+    await loadScript(UV_BUNDLE_CDN);
+    if(typeof Ultraviolet !== 'undefined') return true;
+  }catch(e){}
+  return false;
+}
 
-document.getElementById('cloak-toggle').addEventListener('click',()=>{
-  const panel = document.getElementById('cloak-panel');
-  const btn = document.getElementById('cloak-toggle');
-  panel.classList.toggle('open');
-  btn.classList.toggle('active');
-});
+async function findAndRegisterSW(){
+  for(const path of SW_PATHS){
+    try{
+      const res = await fetch(path);
+      if(res.ok){
+        const scope = path.includes('/uv/') ? '/uv/' : '/';
+        const reg = await navigator.serviceWorker.register(path, { scope });
+        await navigator.serviceWorker.ready;
+        return scope;
+      }
+    }catch(e){}
+  }
+  return null;
+}
 
-document.getElementById('ab-btn').addEventListener('click',()=>{
-  const w = window.open();
-  const i = w.document.createElement('iframe');
-  i.src = location.href;
-  i.style.cssText = 'border:none;width:100%;height:100%;position:fixed;top:0;left:0';
-  w.document.body.style.cssText = 'margin:0;padding:0;overflow:hidden';
-  w.document.body.appendChild(i);
-});
+let uvScope = '/uv/service/';
+let swRegistered = false;
+
+async function init(){
+  setStatus('loading proxy engine...');
+
+  if(!('serviceWorker' in navigator)){
+    setStatus('service workers not supported', 'error');
+    return;
+  }
+
+  const bundleLoaded = await loadUVBundle();
+  if(!bundleLoaded){
+    setStatus('failed to load uv bundle', 'error');
+    return;
+  }
+
+  const scope = await findAndRegisterSW();
+  if(!scope){
+    setStatus('sw not found — check repo has uv sw file', 'error');
+    return;
+  }
+
+  self.__uv$config = {
+    prefix: scope === '/' ? '/service/' : '/uv/service/',
+    encodeUrl: Ultraviolet.codec.xor.encode,
+    decodeUrl: Ultraviolet.codec.xor.decode,
+    handler: UV_HANDLER_CDN,
+    bundle: UV_BUNDLE_CDN,
+    config: '/uv/uv.config.js',
+    sw: scope === '/' ? '/sw.js' : '/uv/uv.sw.js',
+  };
+
+  uvScope = self.__uv$config.prefix;
+  swRegistered = true;
+  setStatus('proxy ready', 'ok');
+
+  try{
+    const bm = await import('https://cdn.jsdelivr.net/npm/@mercuryworkshop/bare-mux@2/dist/bare.mjs');
+    const wt = await import('https://cdn.jsdelivr.net/npm/@mercuryworkshop/wisp-transport@1/dist/index.mjs');
+    const conn = new bm.BareMuxConnection('/baremux.worker.js');
+    await conn.setTransport('/wisp/index.mjs', [{ wisp: WISP }]);
+  }catch(e){}
+}
 
 function resolveInput(raw){
   const t = raw.trim();
@@ -409,20 +215,16 @@ function resolveInput(raw){
 }
 
 function navigate(input){
+  if(!swRegistered){
+    setStatus('proxy still loading, try again in a second', 'error');
+    return;
+  }
   const target = resolveInput(input);
   if(!target) return;
-
-  const overlay = document.getElementById('loading-overlay');
-  const loadTxt = document.getElementById('loading-text');
-  overlay.classList.add('active');
-  loadTxt.textContent = 'loading ' + target;
-
   try{
-    const encoded = __uv$config.encodeUrl(target);
-    location.href = __uv$config.prefix + encoded;
+    location.href = uvScope + __uv$config.encodeUrl(target);
   }catch(e){
-    overlay.classList.remove('active');
-    alert('proxy not ready. make sure uv files are deployed.');
+    setStatus('navigation failed: ' + e.message, 'error');
   }
 }
 
@@ -431,10 +233,51 @@ document.getElementById('go-btn').addEventListener('click',()=>{
 });
 
 document.getElementById('url-input').addEventListener('keydown',e=>{
-  if(e.key === 'Enter') navigate(e.target.value);
+  if(e.key==='Enter') navigate(e.target.value);
+});
+
+document.getElementById('ab-btn').addEventListener('click',()=>{
+  const w = window.open();
+  const i = w.document.createElement('iframe');
+  i.src = location.href;
+  i.style.cssText = 'border:none;width:100%;height:100%;position:fixed;top:0;left:0';
+  w.document.body.style.cssText = 'margin:0;padding:0;overflow:hidden';
+  w.document.body.appendChild(i);
+});
+
+const cloakPresets = [
+  { label:'📄 google docs', title:'Document - Google Docs', icon:'https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico' },
+  { label:'📊 google sheets', title:'Spreadsheet - Google Sheets', icon:'https://ssl.gstatic.com/docs/spreadsheets/favicon3.ico' },
+  { label:'🏫 google classroom', title:'Google Classroom', icon:'https://ssl.gstatic.com/classroom/favicon.png' },
+  { label:'🔍 google', title:'Google', icon:'https://www.google.com/favicon.ico' },
+  { label:'📺 khan academy', title:'Khan Academy', icon:'https://www.khanacademy.org/favicon.ico' },
+  { label:'❌ clear cloak', title:null, icon:null },
+];
+
+const cloakOpts = document.getElementById('cloak-opts');
+cloakPresets.forEach(p=>{
+  const btn = document.createElement('button');
+  btn.className = 'cloak-opt';
+  btn.textContent = p.label;
+  btn.onclick = ()=>{
+    document.title = p.title || 'Google Classroom';
+    const lnk = document.querySelector("link[rel='icon']") || document.createElement('link');
+    lnk.rel = 'icon';
+    lnk.href = p.icon || 'https://ssl.gstatic.com/classroom/favicon.png';
+    document.head.appendChild(lnk);
+    document.querySelectorAll('.cloak-opt').forEach(b=>b.classList.remove('selected'));
+    if(p.title) btn.classList.add('selected');
+  };
+  cloakOpts.appendChild(btn);
+});
+
+document.getElementById('cloak-toggle').addEventListener('click',()=>{
+  document.getElementById('cloak-panel').classList.toggle('open');
+  document.getElementById('cloak-toggle').classList.toggle('active');
 });
 
 document.getElementById('url-input').focus();
+init();
 </script>
 </body>
 </html>
